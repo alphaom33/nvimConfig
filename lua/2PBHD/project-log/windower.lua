@@ -1,7 +1,6 @@
 ---@class Window
 ---@field win number
 ---@field buffer number
----@field toggled boolean
 
 local Window = {}
 Window.__index = Window
@@ -11,12 +10,11 @@ function Window:new()
 end
 
 function Window:toggle()
-	if not self.toggled then
+	if self.buffer == nil then
 		self:show()
 	else
 		self:hide()
 	end
-	self.toggled = not self.toggled
 end
 
 function Window:hide()
@@ -43,9 +41,17 @@ function Window:show()
 			style = "minimal",
 			border = "single",
 		})
+end
 
-		local curr_file = vim.api.nvim_buf_get_name(0)
-		
+function Window:set_data(data)
+	vim.api.nvim_put(data, "l", false, false)
+end
+
+function Window:get_data()
+	if self.buffer == nil then
+		return ""
+	end
+	return vim.api.nvim_buf_get_lines(self.buffer, 0, vim.api.nvim_buf_line_count(self.buffer), false)
 end
 
 return Window

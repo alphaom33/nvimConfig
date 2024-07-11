@@ -9,6 +9,14 @@ Data.projects = {}
 
 local data_path = string.format("%s/projectLog/projects.json", vim.fn.stdpath("data"))
 
+local function ensureDir()
+	local path = Path:new(vim.fn.stdpath("data") .. "/projectLog")
+	if not path:exists() then
+		path:mkdir()
+		Path:new(data_path):write("", "w")
+	end
+end
+
 ---@return [Project]
 local function read()
 	local data = Path:new(data_path):read()
@@ -30,7 +38,26 @@ function Data:add_project(project)
 	write(self.projects)
 end
 
+---@param project string
+function Data:remove_project(project)
+	self.projects[project] = nil
+	write(self.projects)
+end
+
+local function get_keys(t)
+  local keys={}
+  for key,_ in pairs(t) do
+    table.insert(keys, key)
+  end
+  return keys
+end
+
+function Data:get_formatted_data()
+	return get_keys(self.projects)
+end
+
 function Data:new()
+	ensureDir()
 	return setmetatable({
 		projects = read()
 	}, self)

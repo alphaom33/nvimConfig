@@ -21,6 +21,7 @@ end
 
 function Project_Log:add_project()
 	self.window:toggle()
+	self.window:set_data(self.data:get_formatted_data())
 end
 
 local the_project_log = Project_Log:new()
@@ -45,6 +46,14 @@ function Project_Log.setup(self, partial_config)
 		end
 		self.data:add_project(Project:new(opts.args, path))
 	end, { nargs = 1 })
+
+	vim.api.nvim_create_user_command("RemoveProj", function (opts)
+		self.data:remove_project(opts.args)
+	end, { nargs = 1 })
+
+	vim.api.nvim_create_user_command("Whaaa", function (opts)
+		print(self.window:get_data())
+	end, { nargs = 0 })
 
 	return self
 end
