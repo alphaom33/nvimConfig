@@ -51,7 +51,7 @@ end
 function Data:get_formatted_data()
 	local format = {}
 	for k, v in pairs(self.projects) do
-		format[#format + 1] = k .. "," .. v
+		format[#format + 1] = k .. " -> " .. v
 	end
 	return format
 end

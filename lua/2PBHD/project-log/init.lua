@@ -28,8 +28,8 @@ function Project_Log:new()
 		data = data,
 		window = Window:new(
 		function(project_name)
-			local filtered_string = string.gmatch(project_name, "([^,]+)")()
-			vim.cmd.cd(data.projects[filtered_string])
+			local filtered_string = string.gmatch(project_name, "([^%-]+)")()
+			vim.cmd.cd(data.projects[string.sub(filtered_string, 1, #filtered_string - 1)])
 			vim.cmd.Ex()
 		end,
 		function (new_data)
