@@ -54,6 +54,7 @@ return {
 						key_hl = 'Number',
 						key_format = "%s",
 						action = function ()
+							require("2PBHD.project-log"):open_project_window()
 						end
 					},
 					{
@@ -64,6 +65,21 @@ return {
 						action = function ()
 								vim.cmd.cd("~/src")
 								require("telescope.builtin").find_files()
+						end
+					},
+					{
+						icon = " ",
+						desc = "Murder Shadas",
+						key = 'm',
+						key_format = "%s",
+						action = function ()
+							local Path = require("plenary.path")
+							local albe = "abcdefghijklmnopqrstuvwxyz"
+							local data_path = vim.fn.stdpath("data") .. "/shada/main.shada.tmp"
+							for i = 0, #albe do
+								Path:new(data_path .. "." .. albe:sub(i,i)):rm()
+							end
+							Path:new(data_path):rm()
 						end
 					},
 				},

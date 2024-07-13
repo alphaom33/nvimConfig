@@ -1,12 +1,17 @@
 ---@class Window
 ---@field win number
 ---@field buffer number
+---@field onClose function
+---@field data_callback function
 
 local Window = {}
 Window.__index = Window
 
-function Window:new()
-	return self
+function Window:new(callback, data_callback)
+	return setmetatable({
+		onClose = callback,
+		data_callback = data_callback
+	}, self)
 end
 
 function Window:toggle()
@@ -28,7 +33,7 @@ function Window:hide()
 end
 
 function Window:show()
-		local width, height = 50, 2
+		local width, height = 60, 10
 
 		self.buffer = vim.api.nvim_create_buf(false, true)
 		self.win = vim.api.nvim_open_win(self.buffer, true, {
@@ -41,6 +46,34 @@ function Window:show()
 			style = "minimal",
 			border = "single",
 		})
+
+		vim.keymap.set("n", "<Enter>", function ()
+			local data = self:get_data()
+			local pos = vim.fn.getcurpos()
+			self:hide()
+			self.onClose(data[pos[2]])
+		end, { buffer = self.buffer })
+
+		vim.keymap.set("n", "q", function ()
+			self:hide()
+		end, { buffer = self.buffer })
+
+		vim.keymap.set("n", "<Esc>", function ()
+			self:hide()
+		end, { buffer = self.buffer })
+
+		vim.api.nvim_create_autocmd("BufLeave", {
+			buffer = self.buffer,
+			callback = function ()
+				local data = table.concat(self:get_data(), "\n")
+				local out = {}
+				for k, v in string.gmatch(data, "([^,]+),([^\n]+)\n") do
+					out[k] = v
+				end
+				self.data_callback(out)
+			end
+		})
+		vim.cmd.set("syntax=mine")
 end
 
 function Window:set_data(data)

@@ -34,7 +34,6 @@ end
 ---@param project Project
 function Data:add_project(project)
 	self.projects[project.name] = project.path
-	print(vim.json.encode(self.projects))
 	write(self.projects)
 end
 
@@ -44,16 +43,17 @@ function Data:remove_project(project)
 	write(self.projects)
 end
 
-local function get_keys(t)
-  local keys={}
-  for key,_ in pairs(t) do
-    table.insert(keys, key)
-  end
-  return keys
+function Data:write(new_data)
+	self.projects = new_data
+	write(self.projects)
 end
 
 function Data:get_formatted_data()
-	return get_keys(self.projects)
+	local format = {}
+	for k, v in pairs(self.projects) do
+		format[#format + 1] = k .. "," .. v
+	end
+	return format
 end
 
 function Data:new()
@@ -63,4 +63,4 @@ function Data:new()
 	}, self)
 end
 
-return Data
+return Data:new()

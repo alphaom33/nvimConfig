@@ -6,6 +6,7 @@ undotree.setup({
   position = "left", -- "right", "bottom"
   ignore_filetype = { 'undotree', 'undotreeDiff', 'qf', 'TelescopePrompt', 'spectre_panel', 'tsplayground' },
   window = {
+
     winblend = 30,
   },
   keymaps = {
