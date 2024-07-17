@@ -31,3 +31,4 @@ local lsp_config = require('lspconfig')
 
 lsp_config.lua_ls.setup({})
 lsp_config.gdscript.setup({})
+lsp_config.clangd.setup({})

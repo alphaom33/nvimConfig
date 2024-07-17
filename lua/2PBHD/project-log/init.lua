@@ -17,10 +17,12 @@ end
 
 function Project_Log:add_project()
 	local name = vim.fn.input("Name: ")
+	local path = vim.fn.getcwd()
 	if name == "" then
-		return
+		local slash = string.find(string.reverse(path), "\\")
+		name = string.sub(path, #path - (slash - 2), #path)
 	end
-	self.data:add_project(Project:new(name, vim.fn.getcwd()))
+	self.data:add_project(Project:new(name, path))
 end
 
 function Project_Log:new()
@@ -33,7 +35,13 @@ function Project_Log:new()
 			vim.cmd.Ex()
 		end,
 		function (new_data)
-			data:write(new_data)
+			local out = {}
+			for i = 1, #new_data, 1 do
+				for k, v in string.gmatch(new_data[i], "([^%-]+) %-> (.*)") do
+					out[k] = v
+				end
+			end
+			data:write(out)
 		end
 		)
 	}, self)

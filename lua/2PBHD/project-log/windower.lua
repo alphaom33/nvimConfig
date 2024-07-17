@@ -65,14 +65,7 @@ function Window:show()
 		vim.api.nvim_create_autocmd("BufLeave", {
 			buffer = self.buffer,
 			callback = function ()
-				local data = self:get_data()
-				local out = {}
-				for i = 1, #data, 1 do
-					for k, v in string.gmatch(data[i], "([^%-]+) %-> (.*)") do
-						out[k] = v
-					end
-				end
-				self.data_callback(out)
+				self.data_callback(self:get_data())
 			end
 		})
 		vim.cmd.set("syntax=mine")
