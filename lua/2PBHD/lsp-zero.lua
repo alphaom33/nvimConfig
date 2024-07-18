@@ -1,26 +1,28 @@
 local lsp_zero = require('lsp-zero')
 
 lsp_zero.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp_zero.default_keymaps({buffer = bufnr})
+	-- see :help lsp-zero-keybindings
+	-- to learn the available actions
+	lsp_zero.default_keymaps({buffer = bufnr})
 end)
 
 lsp_zero.configure('gdscript', {
-    force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
-    single_file_support = false,
-    cmd = {'ncat', '127.0.0.1', '6006'}, -- the important trick for Windows!
-    root_dir = require('lspconfig.util').root_pattern('project.godot', '.git'),
-    filetypes = {'gd', 'gdscript', 'gdscript3' }
+	force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
+	single_file_support = false,
+	cmd = {'ncat', '127.0.0.1', '6006'}, -- the important trick for Windows!
+	root_dir = require('lspconfig.util').root_pattern('project.godot', '.git'),
+	filetypes = {'gd', 'gdscript', 'gdscript3' }
 })
 
 local cmp = require('cmp')
 
 cmp.setup({
-  completion = { completeopt = 'menu,menuone,noinsert'},
-  mapping = {
-    ['<Tab>'] = cmp.mapping.confirm({select = false}),
-    }
+	completion = { completeopt = 'menu,menuone,noinsert'},
+	mapping = {
+		['<Tab>'] = cmp.mapping.confirm({select = false}),
+		['<C-j>'] = cmp.mapping.select_next_item({default = 'select'}),
+		['<C-k>'] = cmp.mapping.select_prev_item({default = 'select'}),
+	}
 })
 
 lsp_zero.setup()

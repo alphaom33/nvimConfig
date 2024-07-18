@@ -21,4 +21,5 @@ undotree.setup({
   },
 })
 
-vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>u', undotree.toggle, { noremap = true, silent = true })
+--vim.keymap.set('n', '<Esc>', undotree.close, { noremap = true })
