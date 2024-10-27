@@ -1,5 +1,6 @@
 require("2PBHD.remap")
 require("2PBHD.lsp-zero")
+require("2PBHD.change-accounts")
 
 
 vim.cmd.set("tabstop=4 shiftwidth=4")
