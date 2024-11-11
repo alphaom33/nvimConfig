@@ -31,24 +31,12 @@ cmp.setup({
 
 local lsp_configurations = require('lspconfig.configs')
 
-if not lsp_configurations.rock then
-	print("no rock")
-	lsp_configurations.rock = {
-		default_config = {
-			cmd = {'bash'},
-			filetypes = {'rock'},
-			root_dir = require('lspconfig.util').root_pattern('Main.rock')
-		}
-	}
-end
-
 lsp_zero.setup()
 
 -- here you can setup the language servers
 local lsp_config = require('lspconfig')
 
 lsp_config.gdscript.setup({})
-lsp_config.rock.setup({})
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -59,6 +47,3 @@ require('mason-lspconfig').setup({
 		end,
 	},
 })
-
-require("java").setup()
-lsp_config.jdtls.setup({})
