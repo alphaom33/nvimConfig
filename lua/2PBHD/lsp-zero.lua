@@ -17,22 +17,31 @@ lsp_zero.configure('gdscript', {
 	filetypes = {'gd', 'gdscript', 'gdscript3'}
 })
 
-
-local cmp = require('cmp')
+local cmp = require("cmp")
 
 cmp.setup({
-	completion = { completeopt = 'menu,menuone,noinsert'},
-	mapping = {
-		['<Tab>'] = cmp.mapping.confirm({select = false}),
+	snippet = {
+		expand = function(args)
+			vim.snippet.expand(args.body)
+		end
+	},
+	sources = cmp.config.sources({
+		{name = "nvim_lsp"},
+		{name = "conjure"}
+	}, {
+		{name = "buffer"}
+	}),
+	completeopt = 'menu,menuone,noinsert',
+	mapping =  {
+		['<Tab>'] = cmp.mapping.confirm({select = true}),
 		['<S-j>'] = cmp.mapping.select_next_item({default = 'select'}),
 		['<S-k>'] = cmp.mapping.select_prev_item({default = 'select'}),
-	}
+	},
 })
-
-local lsp_configurations = require('lspconfig.configs')
 
 lsp_zero.setup()
 
+--local capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- here you can setup the language servers
 local lsp_config = require('lspconfig')
 
@@ -43,7 +52,9 @@ require('mason-lspconfig').setup({
 	ensure_installed = {},
 	handlers = {
 		function(server_name)
-			require('lspconfig')[server_name].setup({})
+			require('lspconfig')[server_name].setup({
+				--capabilities = capabilities
+			})
 		end,
 	},
 })
