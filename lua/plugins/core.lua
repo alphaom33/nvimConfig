@@ -13,4 +13,6 @@ return {
 		build = ":TSUpdate",
 	},
 	"hiphish/rainbow-delimiters.nvim",
+	"tpope/vim-fugitive",
+	"https://github.com/lewis6991/gitsigns.nvim",
 }

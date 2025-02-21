@@ -31,6 +31,10 @@ local opts = {
             name = "JavaSE-22",
             path = "C:/Program Files/Java/jdk-22",
           },
+		  {
+			  name = "Java-17",
+			  path="C:/Users/Public/wpilib/2025/jdk",
+		  }
         },
       },
     },
@@ -51,7 +55,7 @@ local function setup()
   local root_dir = jdtls.setup.find_root(root_markers)
   local home = os.getenv("HOME")
   local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
-  local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
+  local workspace_dir = "/c/Users/mBorchert/.cache/jdtls/workspace/" .. project_name
 
   opts.cmd = {
     jdtls_bin,

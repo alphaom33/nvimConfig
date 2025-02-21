@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>pv", function ()
+vim.keymap.set("n", "-", function ()
 	vim.cmd.Ex()
 end)
 
