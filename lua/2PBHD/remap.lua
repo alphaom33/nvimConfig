@@ -12,7 +12,8 @@ vim.keymap.set("t", "<Esc>", function ()
 end)
 
 --why do I have to add these help they should work on their own but they don't
-vim.keymap.set({"n", "v", "i"}, "<S-Insert>", "\"+p", { noremap = true })
+vim.keymap.set({"n", "v"}, "<S-Insert>", "\"+p", { noremap = true })
+vim.keymap.set("i", "<S-Insert>", "<C-o>\"+p", { noremap = true })
 vim.keymap.set({"n", "v"}, "<C-Insert>", "\"+y", { noremap = true })
 
 vim.keymap.set({"n"}, "<C-d>", function()
